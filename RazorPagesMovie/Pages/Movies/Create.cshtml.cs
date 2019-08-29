@@ -28,14 +28,18 @@ namespace RazorPagesMovie.Pages.Movies
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // Si al rellenar el formulario hay algun error, no se 
+            // insertan los datos en la BD y se recarga el fórmulario
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            // Si no hay errores, se guardan los datos
             _context.Movie.Add(Movie);
             await _context.SaveChangesAsync();
 
+            // Y redirecionamos a la página Index
             return RedirectToPage("./Index");
         }
     }
