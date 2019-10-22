@@ -1,12 +1,12 @@
 ﻿@model MvcMovie.Models.Movie
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Localizer["Crear"]; 
 }
 
-<h1>Create</h1>
+<h1>@Localizer["Crear"]</h1>
 
-<h4>Movie</h4>
+<h4>@Localizer["Película"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -45,7 +45,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["Volver a la Lista"]</a>
 </div>
 
 @section Scripts {
