@@ -5,12 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using MvcMovie.Models;
 
 namespace MvcMovie.Controllers
 {
     public class MoviesController : Controller
     {
+        private readonly IStringLocalizer<MoviesController> _localizer;
+
+        public MoviesController(IStringLocalizer<MoviesController> localizer)
+        {
+            _localizer = localizer;
+        }
+
         private readonly MvcMovieContext _context;
 
         public MoviesController(MvcMovieContext context)
@@ -21,6 +29,8 @@ namespace MvcMovie.Controllers
         // GET: Movies
         public async Task<IActionResult> Index(string movieGenre, string searchString)
         {
+            //ViewData["controllerText"] = _localizer["Texto de ejemplo pasado desde el controlador."];
+
             // Use LINQ to get list of genres.
             IQueryable<string> genreQuery = from m in _context.Movie
                                             orderby m.Genre
