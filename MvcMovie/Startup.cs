@@ -107,7 +107,8 @@ namespace MvcMovie
                     template: "{culture:regex(^[a-z]{{2}}(\\-[A-Z]{{2}})?$)}/{controller=Home}/{action=Index}/{id?}"
                     );
                 routes.MapRoute(
-                    name: "defaultWithoutLanguage",
+                    //name: "defaultWithoutLanguage",
+                    name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}"
                     );
             });

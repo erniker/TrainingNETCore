@@ -45,9 +45,10 @@
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
+            <h2>@SharedLocalizer["Idiomas"]</h2>
+            @await Component.InvokeAsync("LanguageList")
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2019 @Localizer["- App Películas -"] <a asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacidad"]</a>

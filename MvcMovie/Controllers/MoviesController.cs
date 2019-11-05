@@ -2,27 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using MvcMovie.Models;
 
+
 namespace MvcMovie.Controllers
 {
     public class MoviesController : Controller
     {
-        private readonly IStringLocalizer<MoviesController> _localizer;
 
-        public MoviesController(IStringLocalizer<MoviesController> localizer)
+        /*En tu Controlador, estás recibiendo mediante Inyección de Dependencias a través del Constructor 
+         * los objetos localizer y context.
+         * En estos casos en los que se realiza una Inyección de Dependencias, solo está permitido que 
+         * definas un único Constructor. Esto es así, ya que si defines múltiples Constructores, no se 
+         * podría determinar cual de ellos es el que debería inicializar la Clase controladora.
+         * Debes definir un solo Constructor de la siguiente manera:
+         */
+        private readonly MvcMovieContext _context;
+        private readonly IStringLocalizer<MoviesController> _localizer;
+        public MoviesController(IStringLocalizer<MoviesController> localizer, MvcMovieContext context)
         {
             _localizer = localizer;
-        }
-
-        private readonly MvcMovieContext _context;
-
-        public MoviesController(MvcMovieContext context)
-        {
             _context = context;
         }
 
@@ -181,6 +186,17 @@ namespace MvcMovie.Controllers
         private bool MovieExists(int id)
         {
             return _context.Movie.Any(e => e.Id == id);
+        }
+
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

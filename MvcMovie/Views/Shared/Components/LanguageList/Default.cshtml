@@ -1,0 +1,42 @@
+﻿@using System.Globalization
+@using MvcMovie.Models
+@model IEnumerable<LanguageModel>
+
+@*Cambiando la cultura mediante ruta*@
+<ul>
+    @foreach (var item in Model)
+    {
+        if (item.Active)
+        {
+            <li>@item.Name</li>
+        }
+        else
+        {
+            <li>
+                <a href="@Url.Action((string)ViewContext.RouteData.Values["action"],
+                                     (string)ViewContext.RouteData.Values["controller"], new { culture = item.Culture})"> @item.Name</a>
+            </li>
+        }
+    }
+</ul>
+
+
+@*Cambiando la cultura mediante cookies*@
+@*@{
+        var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+    }
+    <ul>
+        @foreach (var item in Model)
+        {
+            if (item.Active)
+            {
+                <li>@item.Name</li>
+            }
+            else
+            {
+                <li>
+                    <a asp-action="SetLanguage" asp-controller="Home" asp-route-culture="@item.Culture" asp-route-returnUrl="@returnUrl">@item.Name</a>
+                </li>
+            }
+        }
+    </ul>*@
